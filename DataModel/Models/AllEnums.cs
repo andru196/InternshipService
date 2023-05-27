@@ -23,6 +23,7 @@
 
 	public enum UserType
 	{
+		None,
 		Student,
 		Mentor,
 		Buddy,
@@ -43,4 +44,29 @@
 		Visited,
 		Canceled
 	}
+
+	public enum InternResponseStatus
+	{
+		New,
+		Sent,
+		InviteForTest,
+		Approved,
+		Canceled,
+		Rejected
+	}
+
+	public enum Sex
+	{
+		Male,
+		Female
+	}
+
+	public enum EducationDegree
+	{
+		Bachelor,
+		Master,
+		Specialist,
+		PostGraduate
+	}
+
 }

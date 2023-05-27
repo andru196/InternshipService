@@ -9,6 +9,12 @@
 		public Guid? AvatarId { get; set; }
 		public Guid? UniversityId { get; set; }
 		public short StartOfEducation { get; set; }
+		public short EndOfEducation { get; set; }
+		public EducationDegree EducationDegree { get; set; }
+		public string EducationSpecialiazation { get; set; }
+		public Sex Sex { get; set; }
+		public string FederalDistrict { get; set; }
+		public string Citizenship { get; set; }
 		public InternStatus Status { get; set; }
 		public virtual IEnumerable<Tag> Tags { get; set; }
 		public virtual University? University { get; set; }

@@ -13,7 +13,7 @@
 		{
 			if (context.User.Identity.IsAuthenticated)
 			{
-
+				
 			}
 			await next.Invoke(context);
 		}

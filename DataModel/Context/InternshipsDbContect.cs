@@ -27,12 +27,17 @@ namespace DataModel.Context
 		public DbSet<InternReview> InternReviews { get; set; }
 		public DbSet<OrganizationAdmin> OrganizationAdmins { get; set; }
 		public DbSet<FileRecord> Files { get; set; }
+		public DbSet<Notification> Notifications { get; set; }
 
-		
 
+		private bool isFirst = true;
 		public InternshipsDbContect(DbContextOptions options) : base(options)
 		{
-			//Database.EnsureDeleted();
+			if (isFirst)
+			{
+				isFirst = false;
+				Database.EnsureDeleted();
+			}
 			Database.EnsureCreated();
 		}
 		
@@ -97,7 +102,21 @@ namespace DataModel.Context
 				new User() { Email="b@dd.y", Password = "123", FirstName = "buddy", Id = 4, Guid = new Guid("4e0547c4-9cb2-4571-884a-5621ebcfb716"), SecondName = "Trsw", Type = UserType.Buddy},
 				new User() { Email="org@niz.n", Password = "123", FirstName = "orgAdmin", Id = 5, Guid = new Guid("11f3d72f-0f6e-434a-990d-a5af6e65b9dc"), SecondName = "Trsw", Type = UserType.OrganizationAdmin }
 				);
+
+			modelBuilder.EnableAutoHistory();
 			base.OnModelCreating(modelBuilder);
+		}
+
+		public override int SaveChanges()
+		{
+			this.EnsureAutoHistory();
+			return base.SaveChanges();
+		}
+
+		public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+		{
+			this.EnsureAutoHistory();
+			return await base.SaveChangesAsync(cancellationToken);
 		}
 	}
 }

@@ -11,9 +11,9 @@ namespace InternshipService.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class UnivercityController : ControllerBasePlusAuth
+	public class UniversityController : ControllerBasePlusAuth
 	{
-		public UnivercityController(ILogger logger, InternshipsDbContect context, IMapper mapper) : base(logger, context, mapper) { }
+		public UniversityController(ILogger logger, InternshipsDbContect context, IMapper mapper) : base(logger, context, mapper) { }
 
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]

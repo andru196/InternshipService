@@ -3,6 +3,7 @@ using DataModel.Context;
 using DataModel.Models;
 using InternshipService.DTO;
 using InternshipService.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,7 @@ namespace InternshipService.Controllers
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[Authorize(Roles = $"{nameof(UserType.Mentor)},{nameof(UserType.Admin)}")]
 		public async Task<ActionResult<OrganizationDto>> Post(OrganizationDto organiztionDto)
 		{
 			var organiztion = _mapper.Map<Organization>(organiztionDto);
@@ -53,9 +55,12 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Roles = $"{nameof(UserType.Mentor)},{nameof(UserType.OrganizationAdmin)},{nameof(UserType.Admin)}")]
 		public async Task<ActionResult<OrganizationDto>> Put(OrganizationDto organizationDto)
 		{
-			var orgDb = await _dbContext.Organizations.FirstOrDefaultAsync(x => x.Guid == organizationDto.Id);
+			var orgDb = await _dbContext.Organizations
+				.WhereNotNull(Identity.Role == UserType.OrganizationAdmin, x=>x.Guid == new Guid(Identity.OrganizationId))
+				.FirstOrDefaultAsync(x => x.Guid == organizationDto.Id);
 			if (orgDb == null)
 				return NotFound();
 			var organization = _mapper.Map<InternResponse>(organizationDto);
@@ -64,5 +69,16 @@ namespace InternshipService.Controllers
 			await _dbContext.SaveChangesAsync();
 			return Ok();
 		}
+
+
+		[HttpGet("Admins")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		public async Task<ActionResult<IEnumerable<OrganizationAdminDto>>> Get(Guid orgId, int page = 1, int pageSize = 10, EntityType[] types = null) =>
+			Ok(_dbContext.OrganizationAdmins.AsNoTracking()
+				.Where(x=>x.OrganizationId == orgId)
+				.TakePage(page, pageSize)
+				.Select(x => new OrganizationAdminDto(x, types))
+				);
 	}
 }

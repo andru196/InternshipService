@@ -34,7 +34,7 @@ namespace InternshipService.Controllers
 
 
 			var claims = new List<Claim> { new Claim(ClaimTypes.Name, login),
-											new Claim(ClaimTypes.Role, user.Type.ToString().ToLower()),
+											new Claim(ClaimTypes.Role, user.Type.ToString()),
 											new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString())
 			};
 			switch (user.Type)
@@ -59,14 +59,14 @@ namespace InternshipService.Controllers
 			return Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
 		}
 
-		[Authorize]
-		[HttpGet("logout")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<IActionResult> Logout()
-		{
-			await this.HttpContext.SignOutAsync();
-			return Ok();
-		}
+		//[Authorize]
+		//[HttpGet("logout")]
+		//[ProducesResponseType(StatusCodes.Status200OK)]
+		//[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		//public async Task<IActionResult> Logout()
+		//{
+		//	await this.HttpContext.SignOutAsync();
+		//	return Ok();
+		//}
 	}
 }

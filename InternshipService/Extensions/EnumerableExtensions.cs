@@ -13,6 +13,20 @@ namespace InternshipService.Extensions
 			return source;
 		}
 
+		public static IQueryable<TSource> WhereNotNull<TSource>(this IQueryable<TSource> source, object? field, Expression<Func<TSource, bool>> predicate)
+		{
+			if (field != null)
+				return Queryable.Where(source, predicate);
+			return source;
+		}
+
+		public static IQueryable<TSource> WhereTrue<TSource>(this IQueryable<TSource> source, bool flag, Expression<Func<TSource, bool>> predicate)
+		{
+			if (flag)
+				return Queryable.Where(source, predicate);
+			return source;
+		}
+
 		//public static IQueryable<TSource> TakePage<TSource>(this IQueryable<TSource> source, int page, int pageSize)
 		//{
 		//	if (page < 1)

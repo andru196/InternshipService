@@ -3,6 +3,7 @@ using DataModel.Context;
 using DataModel.Models;
 using InternshipService.DTO;
 using InternshipService.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,29 +47,34 @@ namespace InternshipService.Controllers
 				.TakePage(page, pageSize)
 			.Select(x=>new InternDto(x, types)));
 
+		[Authorize(Roles =$"{nameof(UserType.None)},{nameof(UserType.Admin)}")]
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<InternDto>> Post(InternDto internDto)
 		{
 			var intern = _mapper.Map<Intern>(internDto);
-			intern.Guid = Guid.NewGuid();
+			if (Identity.Role == UserType.None)
+				intern.UserId = new Guid(Identity.UserId);
+			intern.Guid = internDto.UserId;
 			_dbContext.Add(intern);
 			await _dbContext.SaveChangesAsync();
 			return Ok(new InternDto(intern));
 		}
 
-
+		[Authorize(Roles =$"{nameof(UserType.Student)},{nameof(UserType.Admin)}")]
 		[HttpPut]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult> Put(InternDto internDto)
 		{
-			var internDb = _dbContext.Interns.FirstOrDefault(x=>internDto.Id == x.Guid)
+			var internDb = _dbContext.Interns.Where(x=>Identity.Role == UserType.Admin || x.UserId == new Guid(Identity.UserId))
+				.FirstOrDefault(x=>internDto.Id == x.Guid)
 				?? throw new HttpException(System.Net.HttpStatusCode.NotFound);
 			var intern = _mapper.Map<Intern>(internDto);
 			intern.Id = internDb.Id;
+			intern.UserId = internDb.UserId;
 			_dbContext.Update(intern);
 			await _dbContext.SaveChangesAsync();
 			return Ok();
@@ -81,6 +87,7 @@ namespace InternshipService.Controllers
 		public async Task<ActionResult<InternReviewDto>> PostReview(InternReviewDto reviewDto)
 		{
 			var review = _mapper.Map<InternReview>(reviewDto);
+			review.From = new Guid(Identity.UserId);
 			_dbContext.Add(review);
 			await _dbContext.SaveChangesAsync();
 			return Ok(new InternReviewDto(review));
@@ -102,6 +109,7 @@ namespace InternshipService.Controllers
 		public async Task<ActionResult<IEnumerable<InternReviewDto>>> GetReviews(Guid? from, Guid? to, int page = 1, int pageSize = 10) => Ok(
 			_dbContext.InternReviews
 			.WhereNotNull(to, x => x.InternId == to)
+			.WhereNotNull(from, x => x.From == from)
 			.TakePage(page, pageSize)
 			.Select(x => new InternReviewDto(x))
 			);
@@ -112,7 +120,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult<IEnumerable<InternReviewDto>>> PutReviews(InternReviewDto reviewDto)
 		{
-			var reviewDb = await _dbContext.Universities.FirstOrDefaultAsync(x => x.Guid == reviewDto.Id);
+			var reviewDb = await _dbContext.InternReviews.Where(x => Identity.Role == UserType.Admin || x.From == new Guid(Identity.UserId)).FirstOrDefaultAsync(x => x.Guid == reviewDto.Id);
 			if (reviewDb == null)
 				return NotFound();
 			var review = _mapper.Map<InternResponse>(reviewDto);

@@ -9,13 +9,20 @@ namespace InternshipService.DTO
 		public DateTime BirthDate { get; set; }
 		public string About { get; set; }
 		public Guid? AvatarId { get; set; }
-		public Guid? UnivercityId { get; set; }
+		public Guid? UniversityId { get; set; }
 		public short StartOfEducation { get; set; }
+		public short EndOfEducation { get; set; }
+		public EducationDegree EducationDegree { get; set; }
+		public string EducationSpecialiazation { get; set; }
+		public Sex Sex { get; set; }
+		public string FederalDistrict { get; set; }
+		public string Citizenship { get; set; }
 		public InternStatus Status { get; set; }
 		public IEnumerable<TagDto> Tags { get; set; }
 		public UniversityDto Univercity { get; set; }
 		public FileRecordDto Avatar { get; set; }
 		public IEnumerable<UserEventDto> Events { get; set; }
+		public UserDto User { get; set; }
 
 		public InternDto(Intern intern, EntityType[] types = null)
 		{
@@ -25,10 +32,20 @@ namespace InternshipService.DTO
 			BirthDate = intern.BirthDate;
 			About = intern.About;
 			AvatarId = intern.AvatarId;
-			UnivercityId = intern.UniversityId;
+			UniversityId = intern.UniversityId;
 			StartOfEducation = intern.StartOfEducation;
+			EndOfEducation = intern.EndOfEducation;
+			EducationDegree = intern.EducationDegree;
+			Sex = intern.Sex;
+			FederalDistrict = intern.FederalDistrict;
+			Citizenship = intern.Citizenship;
+			Status = intern.Status;
 			Status = intern.Status;
 			Tags = intern.Tags?.Select(x=> new TagDto(x))?.ToList() ?? Enumerable.Empty<TagDto>();
+			
+			
+			if (types.Contains(EntityType.User) && intern.User != null)
+				User = new UserDto(intern.User);
 			if (types.Contains(EntityType.University) && intern.University != null)
 				Univercity = new UniversityDto(intern.University);
 			if (types.Contains(EntityType.File) && intern.Avatar != null)
