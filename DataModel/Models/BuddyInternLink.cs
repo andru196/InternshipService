@@ -4,7 +4,7 @@
 	{
 		public Guid InternInternshipId { get; set; }
 		public Guid BuddyId { get; set; }
-		public Buddy Buddy { get; set; }
-		public InternsInternship Intern { get; set; }
+		public virtual Buddy Buddy { get; set; }
+		public virtual InternsInternship Intern { get; set; }
 	}
 }

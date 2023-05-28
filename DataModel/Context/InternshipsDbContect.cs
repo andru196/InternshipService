@@ -43,7 +43,7 @@ namespace DataModel.Context
 			if (isFirst)
 			{
 				isFirst = false;
-				//Database.EnsureDeleted();
+				Database.EnsureDeleted();
 				Database.EnsureCreated();
 			}
 		}
