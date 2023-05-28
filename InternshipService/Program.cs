@@ -104,7 +104,7 @@ app.UseAuthorization();
 
 app.UseRouting();
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+//app.UseCors("AllowAll");
 
 app.UseAuthorization();
 app.UseMiddleware<IdentityMiddleware>();
