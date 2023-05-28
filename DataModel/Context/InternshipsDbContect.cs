@@ -12,6 +12,7 @@ namespace DataModel.Context
 		public DbSet<Mentor> Mentors { get; set; }
 		public DbSet<Buddy> Buddies { get; set; }
 		public DbSet<BuddyInternLink> BuddiesLink { get; set; }
+		public DbSet<Link> Links { get; set; }
 		public DbSet<Event> Events { get; set; }
 		public DbSet<Tag> Tags { get; set; }
 		public DbSet<InternRequest> InternRequests { get; set; }
