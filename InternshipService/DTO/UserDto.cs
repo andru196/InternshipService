@@ -4,7 +4,6 @@ namespace InternshipService.DTO
 {
 	public class UserDto : EntityDto
 	{
-		public Guid Id { get; set; }
 		public string FirstName { get; set; }
 		public string SecondName { get; set; }
 		public string? MiddleName { get; set; }
@@ -15,7 +14,6 @@ namespace InternshipService.DTO
 
 		public UserDto(User user) : base(user)
 		{
-			Id = user.Guid;
 			FirstName = user.FirstName;
 			SecondName = user.SecondName;
 			MiddleName = user.MiddleName;
