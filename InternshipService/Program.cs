@@ -83,6 +83,25 @@ builder.Services.AddSingleton<FileStorageConfig>(x => new FileStorageConfig { Pa
 builder.Services.AddSingleton<InternAutoCheckConfig>(x =>
 	builder.Configuration.GetSection("AutoCheckIntern").Get<InternAutoCheckConfig>());
 
+var AllowedOriginPolicy = "_AllowedOriginPolicy";
+
+
+var settings = builder.Configuration.Get<ApplicationSettings>() ?? throw new ArgumentNullException("ApplicationSettings", "Конфигурация не получена");
+
+
+builder.Services.AddCors(options => options.AddPolicy("AllowAny", builder => builder
+		.AllowAnyOrigin()
+		.AllowAnyHeader()
+		.AllowAnyMethod())
+	);
+
+builder.Services.AddCors(options => options.AddPolicy("AllowSome", builder => builder
+	.WithOrigins(settings.AllowedOrigins)
+	.AllowAnyHeader()
+	.AllowAnyMethod()
+	.AllowCredentials())
+);
+
 var app = builder.Build();
 
 
@@ -104,7 +123,7 @@ app.UseAuthorization();
 
 app.UseRouting();
 app.UseHttpsRedirection();
-//app.UseCors("AllowAll");
+app.UseCors("AllowAny");
 
 app.UseAuthorization();
 app.UseMiddleware<IdentityMiddleware>();
