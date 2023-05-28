@@ -9,11 +9,17 @@ namespace InternshipService.DTO
 		public BuddyDto Buddy { get; set; }
 		public InternsInternshipDto Intern { get; set; }
 
-		public BuddyInternLinkDto(BuddyInternLink entity) : base(entity)
+		public BuddyInternLinkDto(BuddyInternLink entity, EntityType[] types = null) : base(entity)
 		{
+			types ??= new EntityType[0];
+
 			InternInternshipId = entity.InternInternshipId;
 			BuddyId = entity.BuddyId;
-			// TODO: FINISH
+
+			if (types.Contains(EntityType.Buddy) && entity.Buddy != null)
+				Buddy = new BuddyDto(entity.Buddy);
+			if (types.Contains(EntityType.InternsInternship) && entity.Intern != null)
+				Intern = new InternsInternshipDto(entity.Intern);
 		}
 	}
 }

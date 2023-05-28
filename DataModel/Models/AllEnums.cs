@@ -18,6 +18,7 @@
 		InternRequest,
 		InternResponse,
 		InternshipDirection,
+		InternsInternship,
 		File,
 		CaseChempionship,
 		Course,
