@@ -48,6 +48,7 @@ namespace InternshipService.Controllers
 			if (User.Identity.IsAuthenticated && Identity.Role != UserType.Admin)
 				return Unauthorized();
 			var user = _mapper.Map<User>(userDto);
+			user.Guid = Guid.NewGuid();
 			_dbContext.Users.Add(user);
 			await _dbContext.SaveChangesAsync();
 			return Ok(new UserDto(user));
