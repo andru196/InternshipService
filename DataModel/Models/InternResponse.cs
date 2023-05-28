@@ -3,7 +3,7 @@
 	public record InternResponse : Entity
 	{
 		public string Message { get; set; }
-		public bool HaveNeededExperiance { get; set; }
+		public bool HaveNeededExperience { get; set; }
 		public Guid InternId { get; set; }
 		public virtual Intern? Intern { get; set; }
 		public virtual FileRecord? CV { get; set; }
