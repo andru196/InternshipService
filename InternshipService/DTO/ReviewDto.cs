@@ -2,7 +2,7 @@
 
 namespace InternshipService.DTO
 {
-	public record InternReviewDto
+	public record ReviewDto
 	{
 		public Guid Id { get; set; }
 		public Guid InternId { get; set; }
@@ -10,7 +10,7 @@ namespace InternshipService.DTO
 		public  bool IsLike { get; init; }
 		public string TextReview { get; init; }
 
-		public InternReviewDto(InternReview review)
+		public ReviewDto(Review review)
 		{
 			Id = review.Guid;
 			InternId = review.InternId;

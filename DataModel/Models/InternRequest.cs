@@ -14,5 +14,9 @@
 		public virtual IEnumerable<Link>? Links { get; set; }
 		public Guid DirectionId {  get; set; }
 		public virtual InternshipDirection Direction {  get; set; }
+		public double Latitude {  get; set; }
+		public double Longitude {  get; set; }
+		public InternRequestStatus Status { get; set; }
+		public DateTime? CreatedDate { get; set; }
 	}
 }

@@ -15,7 +15,7 @@ namespace InternshipService
 			CreateMap<InternDto, Intern>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<InternRequestDto, InternRequest>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<InternResponseDto, InternResponse>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
-			CreateMap<InternReviewDto, InternReview>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
+			CreateMap<ReviewDto, Review>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<InternshipDirectionDto, InternshipDirection>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<LinkDto, Link>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<MentorDto, Mentor>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));

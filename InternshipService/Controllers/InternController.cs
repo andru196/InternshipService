@@ -84,13 +84,13 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<InternReviewDto>> PostReview(InternReviewDto reviewDto)
+		public async Task<ActionResult<ReviewDto>> PostReview(ReviewDto reviewDto)
 		{
-			var review = _mapper.Map<InternReview>(reviewDto);
+			var review = _mapper.Map<Review>(reviewDto);
 			review.From = new Guid(Identity.UserId);
 			_dbContext.Add(review);
 			await _dbContext.SaveChangesAsync();
-			return Ok(new InternReviewDto(review));
+			return Ok(new ReviewDto(review));
 		}
 
 
@@ -98,7 +98,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<IEnumerable<InternReviewDto>>> GetReview(Guid id) => Ok(new InternReviewDto(
+		public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReview(Guid id) => Ok(new ReviewDto(
 			_dbContext.InternReviews.First(x => x.Guid == id)
 			));
 
@@ -106,7 +106,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<IEnumerable<InternReviewDto>>> GetReviews(Guid? from, Guid? to, int page = 1, int pageSize = 10) => Ok(
+		public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(Guid? from, Guid? to, int page = 1, int pageSize = 10) => Ok(
 			_dbContext.InternReviews
 			.WhereNotNull(to, x => x.InternId == to)
 			.WhereNotNull(from, x => x.From == from)
@@ -118,7 +118,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<IEnumerable<InternReviewDto>>> PutReviews(InternReviewDto reviewDto)
+		public async Task<ActionResult<IEnumerable<ReviewDto>>> PutReviews(ReviewDto reviewDto)
 		{
 			var reviewDb = await _dbContext.InternReviews.Where(x => Identity.Role == UserType.Admin || x.From == new Guid(Identity.UserId)).FirstOrDefaultAsync(x => x.Guid == reviewDto.Id);
 			if (reviewDb == null)

@@ -9,5 +9,10 @@
 		public Guid? AvatarGuid { get; set; }
 		public double PartOfLikes { get; set; } = 0;
 		public virtual Organization Organization { get; set; }
+		// TODO: получает login/password
+		// TODO: видит статусы заявок на стажёров (от своей орг-ии)
+		// TODO: может назначить собес стажёру
+		// TODO: отобряет откланяет отклик от стажёра
+		// TODO: видит программу развития
 	}
 }

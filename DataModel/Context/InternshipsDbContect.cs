@@ -24,7 +24,7 @@ namespace DataModel.Context
 		public DbSet<Organization> Organizations { get; set; }
 		public DbSet<University> Universities { get; set; }
 		public DbSet<InternshipDirection> InternshipDirections { get; set; }
-		public DbSet<InternReview> InternReviews { get; set; }
+		public DbSet<Review> InternReviews { get; set; }
 		public DbSet<OrganizationAdmin> OrganizationAdmins { get; set; }
 		public DbSet<FileRecord> Files { get; set; }
 		public DbSet<Notification> Notifications { get; set; }

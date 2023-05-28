@@ -49,9 +49,22 @@
 	{
 		New,
 		Sent,
+		Moderated,
+		InviteForCareerSchool,
 		InviteForTest,
+		InviteForCaseChempionship,
+		InviteForInterview,
 		Approved,
 		Canceled,
+		Rejected
+	}
+
+	public enum InternRequestStatus
+	{
+		New,
+		Sent,
+		Approved,
+		Finished,
 		Rejected
 	}
 
@@ -67,6 +80,13 @@
 		Master,
 		Specialist,
 		PostGraduate
+	}
+
+	public enum ReviewFor
+	{
+		Buddy,
+		Intern,
+		Company
 	}
 
 }
