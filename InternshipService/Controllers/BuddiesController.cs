@@ -16,7 +16,11 @@ namespace InternshipService.Controllers
 		public BuddiesController(ILogger logger, InternshipsDbContect context, IMapper mapper) : base(logger, context, mapper)
 		{}
 
-
+		/// <summary>
+		/// Получить наставника по его айди
+		/// </summary>
+		/// <param name="id">айди</param>
+		/// <returns></returns>
 		[HttpGet("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -25,6 +29,13 @@ namespace InternshipService.Controllers
 			? NotFound() : Ok(buddy);
 
 
+		/// <summary>
+		/// Поиск наставника по параметрам
+		/// </summary>
+		/// <param name="organizationId">Организация наставника</param>
+		/// <param name="page">Номер страницы</param>
+		/// <param name="pageSize">Размер страницы</param>
+		/// <returns></returns>
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -35,6 +46,11 @@ namespace InternshipService.Controllers
 			.Select(x => new BuddyDto(x))
 			);
 
+		/// <summary>
+		/// Создать наставника
+		/// </summary>
+		/// <param name="buddyDto">Сущность наставника</param>
+		/// <returns></returns>
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
