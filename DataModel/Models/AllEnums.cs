@@ -28,7 +28,7 @@
 	public enum UserType
 	{
 		None,
-		Student,
+		Intern,
 		Mentor,
 		Buddy,
 		OrganizationAdmin,

@@ -33,7 +33,10 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<NotificationDto>> Post(NotificationDto notificationDto)
-		=> throw new NotImplementedException();
+		{
+			var notification = await PostAsync<Notification, NotificationDto>(notificationDto);
+			return Ok(new NotificationDto(notification));
+		}
 
 
 		[HttpPut]

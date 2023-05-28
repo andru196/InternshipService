@@ -49,6 +49,8 @@ namespace InternshipService.Controllers
 				return Unauthorized();
 			var user = _mapper.Map<User>(userDto);
 			user.Guid = Guid.NewGuid();
+			if (!User.Identity.IsAuthenticated)
+				user.Type = UserType.None;
 			_dbContext.Users.Add(user);
 			await _dbContext.SaveChangesAsync();
 			return Ok(new UserDto(user));
@@ -67,7 +69,7 @@ namespace InternshipService.Controllers
 		{
 			var arrival = new ArrivalsFromChannel
 			{
-				Guid = new Guid(),
+				Guid = Guid.NewGuid(),
 				Channel = channelName,
 				UserId = userId
 			};
@@ -99,7 +101,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult<UserDto>> GetMe()
 		 => Ok(!Utils.IsNull(_dbContext.Users.First(x => x.Guid == new Guid(Identity.UserId)), out var user) && user.Type == UserType.Admin ?
-			 new UserDto(user) : user.Type == UserType.Student ?
+			 new UserDto(user) : user.Type == UserType.Intern ?
 			 new UserInternDto(user, new InternDto(_dbContext.Interns.First(x => x.UserId == user.Guid))) : user.Type == UserType.Mentor ?
 			 new UserMentorDto(user, new MentorDto(_dbContext.Mentors.First(x => x.UserId == user.Guid))) : user.Type == UserType.Buddy ?
 			 new UserBuddyDto(user, new BuddyDto(_dbContext.Buddies.First(x => x.UserId == user.Guid))) :

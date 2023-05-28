@@ -52,9 +52,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<TagDto>> Post(TagDto tagDto)
 		{
-			var tag = _mapper.Map<Tag>(tagDto);
-			_dbContext.Add(tag);
-			await _dbContext.SaveChangesAsync();
+			var tag = await PostAsync<Tag, TagDto>(tagDto);
 			return Ok(tag);
 		}
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataModel.Context;
+using DataModel.Models;
 using InternshipService.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,11 @@ namespace InternshipService.Controllers
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<MentorDto>> Post(MentorDto caseChempionshipDto) => throw new NotImplementedException();
-
+		public async Task<ActionResult<MentorDto>> Post(MentorDto caseChempionshipDto)
+		{
+			var caseChempionship = await PostAsync<Mentor, MentorDto>(caseChempionshipDto);
+			return Ok(new MentorDto(caseChempionship));
+		}
 
 		[HttpPut]
 		[ProducesResponseType(StatusCodes.Status200OK)]

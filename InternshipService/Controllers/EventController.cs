@@ -47,7 +47,7 @@ namespace InternshipService.Controllers
 		public async Task<ActionResult<EventDto>> Post(EventDto eventDto)
 		{
 			var @event = _mapper.Map<Event>(eventDto);
-			@event.Guid = new Guid();
+			@event.Guid = Guid.NewGuid();
 			@event.Id = 0;
 			if (Identity.Role == UserType.OrganizationAdmin)
 				@event.ByOrganizationId = new Guid(Identity.OrganizationId);
@@ -94,7 +94,11 @@ namespace InternshipService.Controllers
 		[HttpPost("interns")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<UserEventDto>> PostInternsEvent(UserEventDto eventDto) => throw new NotImplementedException();
+		public async Task<ActionResult<UserEventDto>> PostInternsEvent(UserEventDto eventDto)
+		{
+			var @event = await PostAsync<UserEvent, UserEventDto>(eventDto);
+			return Ok(new UserEventDto(@event));
+		}
 
 
 		[HttpPut("interns")]

@@ -49,7 +49,7 @@ namespace InternshipService.Controllers
 				.TakePage(page, pageSize)
 			.Select(x=>new InternDto(x, types)));
 
-		[Authorize(Roles = nameof(UserType.Student))]
+		[Authorize(Roles = nameof(UserType.Intern))]
 		[HttpGet("MyStatus")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -75,7 +75,7 @@ namespace InternshipService.Controllers
 			return Ok(new InternDto(intern));
 		}
 
-		[Authorize(Roles =$"{nameof(UserType.Student)},{nameof(UserType.Admin)}")]
+		[Authorize(Roles =$"{nameof(UserType.Intern)},{nameof(UserType.Admin)}")]
 		[HttpPut]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

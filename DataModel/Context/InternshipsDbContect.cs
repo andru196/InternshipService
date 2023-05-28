@@ -104,7 +104,7 @@ namespace DataModel.Context
 
 			modelBuilder.Entity<User>().HasData(
 				new User() { Email="l@gi.n", Password = "123", FirstName = "Andru", Id = 1, Guid = new Guid("10055197-d6d1-4e6b-8243-671ef546d89d"), SecondName = "Trsw", Type = UserType.Admin, Phone = "1" },
-				new User() { Email="st@den.t", Password = "123", FirstName = "stdnt", Id = 2, Guid = new Guid("e1faddde-3ce6-4d89-87f8-e521c5ed2d8f"), SecondName = "Trsw", Type = UserType.Student, Phone = "2" },
+				new User() { Email="st@den.t", Password = "123", FirstName = "stdnt", Id = 2, Guid = new Guid("e1faddde-3ce6-4d89-87f8-e521c5ed2d8f"), SecondName = "Trsw", Type = UserType.Intern, Phone = "2" },
 				new User() { Email="m@nto.r", Password = "123", FirstName = "mentor", Id = 3, Guid = new Guid("a45ec758-fc2c-4d92-a5c3-3726f124031e"), SecondName = "Trsw", Type = UserType.Mentor, Phone = "3" },
 				new User() { Email="b@dd.y", Password = "123", FirstName = "buddy", Id = 4, Guid = new Guid("4e0547c4-9cb2-4571-884a-5621ebcfb716"), SecondName = "Trsw", Type = UserType.Buddy, Phone = "4" },
 				new User() { Email="org@niz.n", Password = "123", FirstName = "orgAdmin", Id = 5, Guid = new Guid("11f3d72f-0f6e-434a-990d-a5af6e65b9dc"), SecondName = "Trsw", Type = UserType.OrganizationAdmin, Phone = "5" }

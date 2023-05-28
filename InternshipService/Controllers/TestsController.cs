@@ -38,9 +38,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<TestDto>> Post(TestDto testDto)
 		{
-			var test = _mapper.Map<Test>(testDto);
-			_dbContext.Add(test);
-			await _dbContext.SaveChangesAsync();
+			var test = await PostAsync<Test, TestDto>(testDto);
 			return (Ok(new TestDto(test)));
 		}
 
@@ -85,9 +83,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<InternTestDto>> PostInternsTest(InternTestDto testDto)
 		{
-			var test = _mapper.Map<InternTest>(testDto);
-			_dbContext.Add(test);
-			await _dbContext.SaveChangesAsync();
+			var test = await PostAsync<InternTest, InternTestDto>(testDto);
 			return (Ok(new InternTestDto(test)));
 		}
 

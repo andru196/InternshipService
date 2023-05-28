@@ -36,10 +36,8 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<UserTrainingDto>> Post(UserTrainingDto trainingDto)
 		{
-			var training = _mapper.Map<UserTraining>(trainingDto);
-			_dbContext.Add(training);
-			await _dbContext.SaveChangesAsync();
-			return Ok(training);
+			var training = await PostAsync<UserTraining, UserTrainingDto>(trainingDto);
+			return Ok(new UserTrainingDto(training));
 		}
 
 

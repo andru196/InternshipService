@@ -44,9 +44,7 @@ namespace InternshipService.Controllers
 		[Authorize(Roles = $"{nameof(UserType.Mentor)},{nameof(UserType.Admin)}")]
 		public async Task<ActionResult<OrganizationDto>> Post(OrganizationDto organiztionDto)
 		{
-			var organiztion = _mapper.Map<Organization>(organiztionDto);
-			_dbContext.Add(organiztion);
-			await _dbContext.SaveChangesAsync();
+			var organiztion = await PostAsync<Organization, OrganizationDto>(organiztionDto);
 			return Ok(organiztion);
 		}
 
@@ -90,7 +88,11 @@ namespace InternshipService.Controllers
 		[HttpPost("Admins")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<OrganizationAdminDto>> PostAdmins(Guid id) => throw new NotImplementedException();
+		public async Task<ActionResult<OrganizationAdminDto>> PostAdmins(OrganizationAdminDto adminDto)
+		{
+			var admin = await PostAsync<OrganizationAdmin, OrganizationAdminDto>(adminDto);
+			return Ok(new OrganizationAdminDto(admin));
+		}
 
 		[HttpPut("Admins")]
 		[ProducesResponseType(StatusCodes.Status200OK)]

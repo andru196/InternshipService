@@ -42,9 +42,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<ActionResult<UniversityDto>> Post(UniversityDto universityDto)
 		{
-			var university = _mapper.Map<University>(universityDto);
-			_dbContext.Add(university);
-			await _dbContext.SaveChangesAsync();
+			var university = await PostAsync<University, UniversityDto>(universityDto);
 			return (Ok(new UniversityDto(university)));
 		}
 

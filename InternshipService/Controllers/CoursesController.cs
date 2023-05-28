@@ -31,7 +31,11 @@ namespace InternshipService.Controllers
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<CourseDto>> Post(CourseDto tagDto) => throw new NotImplementedException();
+		public async Task<ActionResult<CourseDto>> Post(CourseDto courseDto)
+		{
+			var course = await PostAsync<Course, CourseDto>(courseDto);
+			return Ok(new CourseDto(course));
+		}
 
 
 		[HttpPut]
@@ -58,7 +62,11 @@ namespace InternshipService.Controllers
 		[HttpPost("interns")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<InternsCourseDto>> PostInternsCourse(InternsCourseDto tagDto) => throw new NotImplementedException();
+		public async Task<ActionResult<InternsCourseDto>> PostInternsCourse(InternsCourseDto courseDto)
+		{
+			var course = await PostAsync<InternsCourse, InternsCourseDto>(courseDto);
+			return Ok(new InternsCourseDto(course));
+		}
 
 
 		[HttpPut("interns")]

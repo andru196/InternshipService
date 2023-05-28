@@ -49,6 +49,7 @@ namespace InternshipService.Controllers
 		protected async Task<T> PostAsync<T, TDto>(TDto dto) where TDto : EntityDto where T: Entity
 		{
 			var db = _mapper.Map<T>(dto);
+			db.Guid = Guid.NewGuid();
 			_dbContext.Add(db);
 			await _dbContext.SaveChangesAsync();
 			return db;
