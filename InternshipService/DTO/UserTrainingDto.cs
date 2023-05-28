@@ -2,11 +2,9 @@
 
 namespace InternshipService.DTO
 {
-	public class UserTrainingDto
+	public class UserTrainingDto : NamedEntityDto
 	{
-		public Guid Id { get; set; }
 		public Guid UserId { get; set; }
-		public string Name { get; set; }
 		public string Description { get; set; }
 		public string Organization { get; set; }
 		public uint Hours { get; set; }
@@ -14,11 +12,11 @@ namespace InternshipService.DTO
 		public FileRecordDto Certificate { get; set; }
 
 		public UserTrainingDto(UserTraining training, EntityType[] types = null)
+			: base(training)
 		{
 			types ??= new EntityType[0];
-			Id = training.Guid;
+
 			UserId = training.UserId;
-			Name = training.Name;
 			Description = training.Description;
 			Organization = training.Organization;
 			Hours = training.Hours;

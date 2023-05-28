@@ -15,6 +15,7 @@ namespace DataModel.Context.Configurations
 			builder.Property(x=>x.Type).IsRequired();
 
 			builder.HasIndex(x=> x.Email).IsUnique();
+			builder.HasIndex(x=> x.Phone).IsUnique();
 		}
 	}
 }

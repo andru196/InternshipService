@@ -2,7 +2,7 @@
 
 namespace InternshipService.DTO
 {
-	public class InternDto
+	public class InternDto : EntityDto
 	{
 		public Guid Id { get; set; }
 		public Guid UserId { get; set; }
@@ -24,7 +24,7 @@ namespace InternshipService.DTO
 		public IEnumerable<UserEventDto> Events { get; set; }
 		public UserDto User { get; set; }
 
-		public InternDto(Intern intern, EntityType[] types = null)
+		public InternDto(Intern intern, EntityType[] types = null) : base(intern)
 		{
 			types ??= new EntityType[0];
 			Id = intern.Guid;
@@ -47,11 +47,11 @@ namespace InternshipService.DTO
 			if (types.Contains(EntityType.User) && intern.User != null)
 				User = new UserDto(intern.User);
 			if (types.Contains(EntityType.University) && intern.University != null)
-				Univercity = new UniversityDto(intern.University);
+				Univercity = new UniversityDto(intern.University, types);
 			if (types.Contains(EntityType.File) && intern.Avatar != null)
 				Avatar = new FileRecordDto(intern.Avatar);
 			if (types.Contains(EntityType.Event))
-				Events = intern.Events?.Select(x=> new UserEventDto(x))?.ToList() ?? Enumerable.Empty<UserEventDto>();
+				Events = intern.Events?.Select(x=> new UserEventDto(x, types))?.ToList() ?? Enumerable.Empty<UserEventDto>();
 		}
 	}
 }

@@ -4,5 +4,6 @@
 	{
 		public bool IsLink { get; set; }
 		public string? Body { get; set; }
+		public Guid OrganizationId { get; set; }
 	}
 }

@@ -2,11 +2,11 @@
 {
 	public record InternCaseChempionshipResult : Entity
 	{
-		public Guid InterId { get; set; }
+		public Guid InternId { get; set; }
 		public Guid CaseChempionshipId { get; set; }
 
-		public Intern? Intern { get; set; }
-		public CaseChempionship? CaseChempionship { get; set; }
+		public virtual Intern? Intern { get; set; }
+		public virtual CaseChempionship? CaseChempionship { get; set; }
 		public bool IsViewed { get; set; }
 		public uint Raiting { get; set; }
 	}

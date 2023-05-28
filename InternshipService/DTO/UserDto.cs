@@ -2,7 +2,7 @@
 
 namespace InternshipService.DTO
 {
-	public class UserDto
+	public class UserDto : EntityDto
 	{
 		public Guid Id { get; set; }
 		public string FirstName { get; set; }
@@ -11,16 +11,17 @@ namespace InternshipService.DTO
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public UserType Type { get; set; }
+		public string Phone { get; set; }
 
-		public UserDto(User user)
+		public UserDto(User user) : base(user)
 		{
 			Id = user.Guid;
 			FirstName = user.FirstName;
 			SecondName = user.SecondName;
 			MiddleName = user.MiddleName;
 			Email = user.Email;
-			//Password = user.Password;
 			Type = user.Type;
+			Phone = user.Phone;
 		}
 	}
 

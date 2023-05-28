@@ -2,15 +2,14 @@
 
 namespace InternshipService.DTO
 {
-	public record InternshipDirectionDto
+	public class InternshipDirectionDto : NamedEntityDto
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 
-		public InternshipDirectionDto(InternshipDirection direction)
+
+		public InternshipDirectionDto(InternshipDirection direction) : base(direction)
 		{
-			Id = direction.Guid;
-			Name = direction.Name;
 		}
 	}
 }

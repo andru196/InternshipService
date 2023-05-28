@@ -7,7 +7,7 @@ namespace DataModel.Context.Configurations
 	{
 		public override void Configure(EntityTypeBuilder<FileRecord> builder)
 		{
-			builder.Property(x => x.FullPath).HasMaxLength(300).IsRequired();
+			builder.Property(x => x.Path).HasMaxLength(300).IsRequired();
 			base.Configure(builder);
 		}
 	}

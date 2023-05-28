@@ -2,12 +2,6 @@
 using DataModel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataModel.Context
 {
@@ -24,21 +18,32 @@ namespace DataModel.Context
 		public DbSet<Organization> Organizations { get; set; }
 		public DbSet<University> Universities { get; set; }
 		public DbSet<InternshipDirection> InternshipDirections { get; set; }
-		public DbSet<Review> InternReviews { get; set; }
+		public DbSet<Review> Reviews { get; set; }
 		public DbSet<OrganizationAdmin> OrganizationAdmins { get; set; }
 		public DbSet<FileRecord> Files { get; set; }
 		public DbSet<Notification> Notifications { get; set; }
+		public DbSet<Course> Courses { get; set; }
+		public DbSet<CaseChempionship> CaseChempionships { get; set; }
+		public DbSet<InternCaseChempionshipResult> InternCaseChempionshipResults { get; set; }
+		public DbSet<InternsInternship> InternsInternships { get; set; }
+		public DbSet<Test> Tests { get; set; }
+		public DbSet<UserTraining> UserTrainings { get; set; }
+		public DbSet<InternsCourse> InternsCourses { get; set; }
+		public DbSet<InternTest> InternTest { get; set; }
+		public DbSet<BuddyInternLink> BuddyInternLinks { get; set; }
+		public DbSet<ArrivalsFromChannel> Arrivals { get; set; }
 
 
-		private bool isFirst = true;
+
+		private static bool isFirst = true;
 		public InternshipsDbContect(DbContextOptions options) : base(options)
 		{
 			if (isFirst)
 			{
 				isFirst = false;
-				Database.EnsureDeleted();
+				//Database.EnsureDeleted();
+				Database.EnsureCreated();
 			}
-			Database.EnsureCreated();
 		}
 		
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -73,7 +78,7 @@ namespace DataModel.Context
 			modelBuilder.ApplyConfiguration(new InternConfiguration());
 			modelBuilder.ApplyConfiguration(new InternRequestConfiguration());
 			modelBuilder.ApplyConfiguration(new InternResponseConfiguration());
-			modelBuilder.ApplyConfiguration(new InternReviewConfiguration());
+			modelBuilder.ApplyConfiguration(new ReviewConfiguration());
 			modelBuilder.ApplyConfiguration(new InternshipDirectionConfiguration());
 			modelBuilder.ApplyConfiguration(new LinkConfiguration());
 			modelBuilder.ApplyConfiguration(new MentorConfiguration());
@@ -96,11 +101,11 @@ namespace DataModel.Context
 				new InternshipDirection() { Id = 7, Name = "Правовое пространство",	Guid = new Guid("ebf1725d-de02-493a-bab4-516d99a2f0cd") });
 
 			modelBuilder.Entity<User>().HasData(
-				new User() { Email="l@gi.n", Password = "123", FirstName = "Andru", Id = 1, Guid = new Guid("10055197-d6d1-4e6b-8243-671ef546d89d"), SecondName = "Trsw", Type = UserType.Admin },
-				new User() { Email="st@den.t", Password = "123", FirstName = "stdnt", Id = 2, Guid = new Guid("e1faddde-3ce6-4d89-87f8-e521c5ed2d8f"), SecondName = "Trsw", Type = UserType.Student },
-				new User() { Email="m@nto.r", Password = "123", FirstName = "mentor", Id = 3, Guid = new Guid("a45ec758-fc2c-4d92-a5c3-3726f124031e"), SecondName = "Trsw", Type = UserType.Mentor },
-				new User() { Email="b@dd.y", Password = "123", FirstName = "buddy", Id = 4, Guid = new Guid("4e0547c4-9cb2-4571-884a-5621ebcfb716"), SecondName = "Trsw", Type = UserType.Buddy},
-				new User() { Email="org@niz.n", Password = "123", FirstName = "orgAdmin", Id = 5, Guid = new Guid("11f3d72f-0f6e-434a-990d-a5af6e65b9dc"), SecondName = "Trsw", Type = UserType.OrganizationAdmin }
+				new User() { Email="l@gi.n", Password = "123", FirstName = "Andru", Id = 1, Guid = new Guid("10055197-d6d1-4e6b-8243-671ef546d89d"), SecondName = "Trsw", Type = UserType.Admin, Phone = "1" },
+				new User() { Email="st@den.t", Password = "123", FirstName = "stdnt", Id = 2, Guid = new Guid("e1faddde-3ce6-4d89-87f8-e521c5ed2d8f"), SecondName = "Trsw", Type = UserType.Student, Phone = "2" },
+				new User() { Email="m@nto.r", Password = "123", FirstName = "mentor", Id = 3, Guid = new Guid("a45ec758-fc2c-4d92-a5c3-3726f124031e"), SecondName = "Trsw", Type = UserType.Mentor, Phone = "3" },
+				new User() { Email="b@dd.y", Password = "123", FirstName = "buddy", Id = 4, Guid = new Guid("4e0547c4-9cb2-4571-884a-5621ebcfb716"), SecondName = "Trsw", Type = UserType.Buddy, Phone = "4" },
+				new User() { Email="org@niz.n", Password = "123", FirstName = "orgAdmin", Id = 5, Guid = new Guid("11f3d72f-0f6e-434a-990d-a5af6e65b9dc"), SecondName = "Trsw", Type = UserType.OrganizationAdmin, Phone = "5" }
 				);
 
 			modelBuilder.EnableAutoHistory();

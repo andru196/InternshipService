@@ -13,12 +13,6 @@ namespace InternshipService.Controllers
 	[ApiController]
 	public class IntrernResponseController : ControllerBasePlusAuth
 	{
-		// TODO: автопроверка заявок по 1) возраст 2) гражданство 3) уровень образования 4) релевантный опыт работы
-		// для модераторов, статусы заявок не менять
-
-		// TODO: статистика по 8 критериями: 1) всего откликов релевантных/не 2) возраст 3) фед округ 4) ВУЗ 5) уровень обр-я
-		// есть ли рел опыт работы 7) напр стажи 8) каналы привлечения, из которых пришли кандидаты
-
 		// TODO: рассылка notofications (email)
 
 		// getMyStatus
@@ -89,6 +83,11 @@ namespace InternshipService.Controllers
 			_dbContext.Update(response);
 			await _dbContext.SaveChangesAsync();
 			return Ok();
+		}
+
+		private async Task RelevantInterns()
+		{
+
 		}
 	}
 }

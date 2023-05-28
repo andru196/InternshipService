@@ -14,7 +14,8 @@ namespace InternshipService
 			CreateMap<EventDto, Event>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<InternDto, Intern>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<InternRequestDto, InternRequest>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
-			CreateMap<InternResponseDto, InternResponse>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
+			CreateMap<InternResponseDto, InternResponse>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id))
+				.ForMember(x => x.Year, x => x.MapFrom(y => y.CreatedDate.Value.Year));
 			CreateMap<ReviewDto, Review>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<InternshipDirectionDto, InternshipDirection>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<LinkDto, Link>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
@@ -23,7 +24,9 @@ namespace InternshipService
 			CreateMap<TagDto, Tag>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<UniversityDto, University>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
 			CreateMap<UserEventDto, UserEvent>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
-			CreateMap<UserTrainingDto, UserTraining>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id)); 
+			CreateMap<UserTrainingDto, UserTraining>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
+			CreateMap<EntityDto, Entity>().ForMember(x => x.Guid, x => x.MapFrom(y => y.Id));
+			
 		}
 	}
 }

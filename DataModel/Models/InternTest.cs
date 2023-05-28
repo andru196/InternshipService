@@ -6,8 +6,8 @@
 		public Guid InterId { get; set; }
 		public Guid TestId { get; set; }
 
-		public Intern? Inter { get; set; }
-		public Test? Test { get; set; }
+		public virtual Intern? Intern { get; set; }
+		public virtual Test? Test { get; set; }
 		public bool IsViewed { get; set; }
 	}
 }

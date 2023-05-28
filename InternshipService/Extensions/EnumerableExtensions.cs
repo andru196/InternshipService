@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataModel.Models;
+using InternshipService.DTO;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
@@ -55,5 +57,16 @@ namespace InternshipService.Extensions
 				return source.Include(navigationPropertyPath);
 			return source;
 		}
+
+
+		public static TSource? FirstOrDefaultFromDto<TSource, TSourceDto>(this IEnumerable<TSource> source, TSourceDto dto) where TSourceDto : EntityDto
+				where TSource : Entity
+		=> source.FirstOrDefault(x => x.Guid == dto.Id);
+
+
+		public static async Task<TSource?> FirstOrDefaultFromDtoAsync<TSource, TSourceDto>(this IQueryable<TSource> source, TSourceDto dto) where TSourceDto : EntityDto
+				where TSource : Entity
+		=> await source.FirstOrDefaultAsync(x => x.Guid == dto.Id);
+
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace InternshipService.DTO
 {
-	public class EventDto
+	public class EventDto : NamedEntityDto
 	{
 		public Guid Id { get; set; }
 		public string Description { get; set; }
@@ -12,17 +12,17 @@ namespace InternshipService.DTO
 		public DateTime Begin { get; set; }
 		public DateTime? End { get; set; }
 		
-		public EventDto(Event eventDb, EntityType[] types = null)
+		public EventDto(Event eventDb, EntityType[] types = null) : base(eventDb)
 		{
 			types ??= new EntityType[0];
-			Id = eventDb.Guid;
+			
 			Description = eventDb.Description;
 			Address = eventDb.Address;
 			ByOrganizationName = eventDb.ByOrganizationName;
 			Begin = eventDb.Begin;
 			End = eventDb.End;
 			if (types.Contains(EntityType.Organization) && eventDb.ByOrganization != null)
-				ByOrganization = new OrganizationDto(eventDb.ByOrganization);
+				ByOrganization = new OrganizationDto(eventDb.ByOrganization, types);
 		}
 	}
 }

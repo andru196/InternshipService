@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataModel.Context;
 using DataModel.Models;
+using InternshipService.Configs;
 using InternshipService.DTO;
 using InternshipService.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,8 @@ namespace InternshipService.Controllers
 	[ApiController]
 	public class InternController : ControllerBasePlusAuth
 	{
-		public InternController(ILogger logger, InternshipsDbContect context, IMapper mapper) : base(logger, context, mapper) { }
+		private InternAutoCheckConfig _autoCheckConfig;
+		public InternController(ILogger logger, InternshipsDbContect context, IMapper mapper, InternAutoCheckConfig autoCheckConfig) : base(logger, context, mapper) => _autoCheckConfig = autoCheckConfig;
 
 
 		[HttpGet("{id}")]
@@ -46,6 +48,17 @@ namespace InternshipService.Controllers
 				.WhereNotNull(eventId, x => x.Events.Any(y=>y.EventId == eventId))
 				.TakePage(page, pageSize)
 			.Select(x=>new InternDto(x, types)));
+
+		[Authorize(Roles = nameof(UserType.Student))]
+		[HttpGet("MyStatus")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<InternResponseStatus>> GetMyStatus()
+		=> Ok((await _dbContext.InternResponses
+			.Where(x=>x.Intern.User.Guid == Identity.Id)
+			.FirstOrDefaultAsync(x=> x.Year == DateTime.Now.Year))
+			?.Status ?? InternResponseStatus.New);
 
 		[Authorize(Roles =$"{nameof(UserType.None)},{nameof(UserType.Admin)}")]
 		[HttpPost]
@@ -80,55 +93,39 @@ namespace InternshipService.Controllers
 			return Ok();
 		}
 
-		[HttpPost("reviews")]
+		/// <summary>
+		/// Иницирует автоматическую проверку заявок по заданым параметрам 
+		/// </summary>
+		/// <returns>Список отвергнутых заявок</returns>
+		[Authorize(Roles = $"{nameof(UserType.Mentor)},{nameof(UserType.Admin)}")]
+		[HttpGet("AutoCheck")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<ReviewDto>> PostReview(ReviewDto reviewDto)
+		public async Task<ActionResult<IEnumerable<InternResponseDto>>> AutoCheck()
 		{
-			var review = _mapper.Map<Review>(reviewDto);
-			review.From = new Guid(Identity.UserId);
-			_dbContext.Add(review);
-			await _dbContext.SaveChangesAsync();
-			return Ok(new ReviewDto(review));
-		}
-
-
-		[HttpGet("reviews/{id}")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReview(Guid id) => Ok(new ReviewDto(
-			_dbContext.InternReviews.First(x => x.Guid == id)
-			));
-
-		[HttpGet("reviews")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(Guid? from, Guid? to, int page = 1, int pageSize = 10) => Ok(
-			_dbContext.InternReviews
-			.WhereNotNull(to, x => x.InternId == to)
-			.WhereNotNull(from, x => x.From == from)
-			.TakePage(page, pageSize)
-			.Select(x => new InternReviewDto(x))
+			var rejectedResponse = _dbContext.InternResponses
+				.Include(x=>x.Intern)
+				.ThenInclude(x=>x.User)
+				.Where(x => 
+					((x.Education == EducationDegree.Bachelor || x.Education == EducationDegree.Specialist) && x.Course < _autoCheckConfig.MinimalCourse)
+					|| (DateTime.Now.Year - x.Intern.BirthDate.Year) < _autoCheckConfig.Age.From || (DateTime.Now.Year - x.Intern.BirthDate.Year) > _autoCheckConfig.Age.To
+					|| !_autoCheckConfig.Citizen.Contains(x.Intern.Citizenship)
+					|| (_autoCheckConfig.NeedRelevantExperiance && !x.HaveNeededExperience));
+			await rejectedResponse.ForEachAsync(x => { 
+				x.Status = InternResponseStatus.Rejected;
+				_dbContext.Notifications.Add(new Notification
+				{
+					Body = string.Format(_autoCheckConfig.SorryMsg, x.Intern.User.SecondName, x.Intern.User.FirstName, x.Intern.User.MiddleName),
+					From = _autoCheckConfig.FromUser,
+					Guid = Guid.NewGuid(),
+					Name = string.Format(_autoCheckConfig.SorryMsgSubject, x.Intern.User.SecondName, x.Intern.User.FirstName, x.Intern.User.MiddleName),
+					To = x.Intern.Guid
+				});
+			}
 			);
-
-		[HttpPut("reviews")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult<IEnumerable<ReviewDto>>> PutReviews(ReviewDto reviewDto)
-		{
-			var reviewDb = await _dbContext.InternReviews.Where(x => Identity.Role == UserType.Admin || x.From == new Guid(Identity.UserId)).FirstOrDefaultAsync(x => x.Guid == reviewDto.Id);
-			if (reviewDb == null)
-				return NotFound();
-			var review = _mapper.Map<InternResponse>(reviewDto);
-			review.Id = reviewDb.Id;
-			_dbContext.Update(review);
 			await _dbContext.SaveChangesAsync();
-			return Ok();
+			return Ok(rejectedResponse.Select(x=> new InternResponseDto(x, null)));
 		}
-
 	}
 }

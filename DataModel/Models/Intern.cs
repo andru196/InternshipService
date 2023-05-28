@@ -16,9 +16,9 @@
 		public string FederalDistrict { get; set; }
 		public string Citizenship { get; set; }
 		public InternStatus Status { get; set; }
-		public virtual IEnumerable<Tag> Tags { get; set; }
 		public virtual University? University { get; set; }
 		public virtual FileRecord? Avatar { get; set; }
 		public virtual IEnumerable<UserEvent> Events { get; set; }
+		public virtual IEnumerable<Tag> Tags { get; set; }
 	}
 }

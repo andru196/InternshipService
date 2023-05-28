@@ -39,8 +39,8 @@ namespace InternshipService.Extensions
 			=> user.Role switch
 			{
 				UserType.Admin => source,
-				UserType.Mentor => source.Where(x => x.InternRequest.DirectionId == new Guid(user.DirectionId)),
-				UserType.OrganizationAdmin => source.Where(x => x.InternRequest.OrganizationId == new Guid(user.OrganizationId)),
+				UserType.Mentor => source,
+				UserType.OrganizationAdmin => source,
 				_ => source.Where(x => x.InternId == new Guid(user.UserId)),
 			};
 	}

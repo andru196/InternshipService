@@ -18,7 +18,10 @@
 		InternRequest,
 		InternResponse,
 		InternshipDirection,
-		File
+		File,
+		CaseChempionship,
+		Course,
+		Test
 	}
 
 	public enum UserType
@@ -79,7 +82,8 @@
 		Bachelor,
 		Master,
 		Specialist,
-		PostGraduate
+		PostGraduate,
+		Graduate
 	}
 
 	public enum ReviewFor
@@ -87,6 +91,13 @@
 		Buddy,
 		Intern,
 		Company
+	}
+
+	public enum RequsetResponseStatus
+	{
+		Sent,
+		Approved,
+		Rejected
 	}
 
 }

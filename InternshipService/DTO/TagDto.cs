@@ -2,15 +2,9 @@
 
 namespace InternshipService.DTO
 {
-	public record TagDto
+	public class TagDto : NamedEntityDto
 	{
-		public Guid Id { get; set; }
-		public string Name { get; set; }
 
-		public TagDto(Tag tag)
-		{
-			Id = tag.Guid;
-			Name = tag.Name;
-		}
+		public TagDto(Tag tag) : base(tag) { }
 	}
 }

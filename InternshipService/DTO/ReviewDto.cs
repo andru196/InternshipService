@@ -2,21 +2,23 @@
 
 namespace InternshipService.DTO
 {
-	public record ReviewDto
+	public class ReviewDto : EntityDto
 	{
 		public Guid Id { get; set; }
-		public Guid InternId { get; set; }
+		public Guid To { get; set; }
 		public Guid From { get; set; }
-		public  bool IsLike { get; init; }
 		public string TextReview { get; init; }
+		public uint Raiting { get; init; }
+		public ReviewFor ToEntityType { get; set; }
 
-		public ReviewDto(Review review)
+		public ReviewDto(Review review) : base(review)
 		{
 			Id = review.Guid;
-			InternId = review.InternId;
+			To = review.To;
 			From = review.From;
 			TextReview = review.TextReview;
-			IsLike = review.IsLike;
+			Raiting = review.Raiting;
+			ToEntityType = review.ToEntityType;
 		}
 	}
 }

@@ -32,7 +32,7 @@ namespace InternshipService.Controllers
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<NotificationDto>> Post(UniversityDto universityDto)
+		public async Task<ActionResult<NotificationDto>> Post(NotificationDto notificationDto)
 		=> throw new NotImplementedException();
 
 
@@ -40,7 +40,15 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult> Put(UniversityDto universityDto)
+		public async Task<ActionResult> Put(NotificationDto notificationDto)
 		=> throw new NotImplementedException();
+
+
+		[HttpGet("my")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult> GetMy()
+			=> Ok(_dbContext.Notifications.Where(x => x.To == Identity.Id).Select(x => new NotificationDto(x)));
 	}
 }

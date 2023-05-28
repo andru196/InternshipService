@@ -71,14 +71,30 @@ namespace InternshipService.Controllers
 		}
 
 
+		[HttpGet("Admins/{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ActionResult<OrganizationAdminDto>> GetAdmin(Guid id) => throw new NotImplementedException();
+
 		[HttpGet("Admins")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public async Task<ActionResult<IEnumerable<OrganizationAdminDto>>> Get(Guid orgId, int page = 1, int pageSize = 10, EntityType[] types = null) =>
+		public async Task<ActionResult<IEnumerable<OrganizationAdminDto>>> GetAdmins(Guid? orgId = null, int page = 1, int pageSize = 10, EntityType[] types = null) =>
 			Ok(_dbContext.OrganizationAdmins.AsNoTracking()
-				.Where(x=>x.OrganizationId == orgId)
+				.WhereNotNull(orgId, x=>x.OrganizationId == orgId)
 				.TakePage(page, pageSize)
 				.Select(x => new OrganizationAdminDto(x, types))
 				);
+
+		[HttpPost("Admins")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		public async Task<ActionResult<OrganizationAdminDto>> PostAdmins(Guid id) => throw new NotImplementedException();
+
+		[HttpPut("Admins")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		public async Task<ActionResult> PutAdmins(OrganizationAdminDto admin) => throw new NotImplementedException();
 	}
 }

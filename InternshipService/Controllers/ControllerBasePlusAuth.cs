@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataModel.Context;
 using DataModel.Models;
+using InternshipService.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -43,10 +44,23 @@ namespace InternshipService.Controllers
 		{
 			(_logger, _dbContext, _mapper)  = (logger, context, mapper);
 		}
+
+		[NonAction]
+		protected async Task<T> PostAsync<T, TDto>(TDto dto) where TDto : EntityDto where T: Entity
+		{
+			var db = _mapper.Map<T>(dto);
+			_dbContext.Add(db);
+			await _dbContext.SaveChangesAsync();
+			return db;
+		}
 	}
 
 	public record UserServiceIdentity(string UserId,
-		UserType Role, 
-		string? DirectionId = null, 
-		string? OrganizationId = null);
+		UserType Role,
+		string? DirectionId = null,
+		string? OrganizationId = null)
+	{
+		internal Guid Id { get => new Guid(UserId); }
+	}
+
 }

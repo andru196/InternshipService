@@ -53,6 +53,28 @@ namespace InternshipService.Controllers
 			return Ok(user);
 		}
 
+		/// <summary>
+		///  Регистрация прибытия из канала
+		/// </summary>
+		/// <param name="userId">Id пользователя</param>
+		/// <param name="channelName">Откуда пришёл</param>
+		/// <returns></returns>
+		[HttpPost("FromChannel")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		public async Task<ActionResult<UserDto>> Post(Guid userId, string channelName="site")
+		{
+			var arrival = new ArrivalsFromChannel
+			{
+				Guid = new Guid(),
+				Channel = channelName,
+				UserId = userId
+			};
+			_dbContext.Arrivals.Add(arrival);
+			await _dbContext.SaveChangesAsync();
+			return Ok();
+		}
+
 		[Authorize]
 		[HttpPut]
 		[ProducesResponseType(StatusCodes.Status200OK)]

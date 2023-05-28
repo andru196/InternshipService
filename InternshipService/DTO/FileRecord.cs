@@ -2,15 +2,13 @@
 
 namespace InternshipService.DTO
 {
-	public class FileRecordDto
+	public class FileRecordDto : EntityDto
 	{
-		public Guid Id { get; set; }
 		public string FullPath { get; set; }
 
-		public FileRecordDto(FileRecord file)
+		public FileRecordDto(FileRecord file) : base(file)
 		{
-			Id = file.Guid;
-			FullPath = file.FullPath;
+			//FullPath = file.FullPath;
 		}
 	}
 }

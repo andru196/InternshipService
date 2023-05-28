@@ -2,6 +2,7 @@
 using AutoMapper;
 using DataModel;
 using InternshipService;
+using InternshipService.Configs;
 using InternshipService.Controllers;
 using InternshipService.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,6 +77,11 @@ builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
 	mc.AddProfile(new MappingProfile());
 }).CreateMapper());
+
+builder.Services.AddSingleton<FileStorageConfig>(x => new FileStorageConfig { PathToStorage = builder.Configuration["FILE_STORAGE"] });
+
+builder.Services.AddSingleton<InternAutoCheckConfig>(x =>
+	builder.Configuration.GetSection("AutoCheckIntern").Get<InternAutoCheckConfig>());
 
 var app = builder.Build();
 

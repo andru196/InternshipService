@@ -2,7 +2,7 @@
 {
 	public record Link : NamedEntity
 	{
-		public Guid OrgraniztionId { get; set; }
-		public virtual Organization? Orgraniztion { get; set; }
+		public Guid ForId { get; set; }
+		public EntityType EntityType { get; set; }
 	}
 }
