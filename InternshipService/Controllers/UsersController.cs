@@ -11,7 +11,7 @@ namespace InternshipService.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class UsersController : ControllerBasePlusAuth
+	public class UsersController : ControllerBasePlus
 	{
 		public UsersController(ILogger logger, InternshipsDbContect context, IMapper mapper) : base(logger, context, mapper) { }
 
@@ -50,7 +50,7 @@ namespace InternshipService.Controllers
 			var user = _mapper.Map<User>(userDto);
 			_dbContext.Users.Add(user);
 			await _dbContext.SaveChangesAsync();
-			return Ok(user);
+			return Ok(new UserDto(user));
 		}
 
 		/// <summary>
@@ -82,7 +82,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult> Put(UserDto userDto)
 		{
-			var userDb = await _dbContext.Users.FilterByUser(Identity).FirstOrDefaultAsync(x => x.Guid == userDto.Id);
+			var userDb = await _dbContext.Users.FilterByUser(Identity).FirstOrDefaultAsync(x => x.Guid == userDto.Guid);
 			if (userDb == null) return NotFound();
 			var user = _mapper.Map<User>(userDto);
 			user.Id = userDb.Id;

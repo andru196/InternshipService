@@ -9,6 +9,7 @@ namespace InternshipService.DTO
 		public Guid To { get; set; }
 		public bool Viewed { get; set; }
 
+		public NotificationDto() : base() { }
 		public NotificationDto(Notification entity) : base(entity)
 		{
 			Body = entity.Body;

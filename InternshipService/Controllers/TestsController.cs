@@ -51,7 +51,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult> Put(TestDto testDto)
 		{
-			var testDb = await _dbContext.Tests.FirstOrDefaultAsync(x => x.Guid == testDto.Id);
+			var testDb = await _dbContext.Tests.FirstOrDefaultAsync(x => x.Guid == testDto.Guid);
 			if (testDb == null) return NotFound();
 			var test = _mapper.Map<Test>(testDto);
 			test.Id = testDb.Id;
@@ -98,7 +98,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult> PutInternsTest(InternTestDto testDto)
 		{
-			var testDb = await _dbContext.InternTest.FirstOrDefaultAsync(x => x.Guid == testDto.Id);
+			var testDb = await _dbContext.InternTest.FirstOrDefaultAsync(x => x.Guid == testDto.Guid);
 			if (testDb == null) return NotFound();
 			var test = _mapper.Map<InternTest>(testDto);
 			test.Id = testDb.Id;

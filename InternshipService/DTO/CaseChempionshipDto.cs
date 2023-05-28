@@ -5,6 +5,7 @@ namespace InternshipService.DTO
 	public class CaseChempionshipDto : NamedEntityDto
 	{
 		public string Link { get; set; }
+		public CaseChempionshipDto() : base() { }
 		public CaseChempionshipDto(CaseChempionship caseChempionship) : base(caseChempionship)
 		{
 			Link = caseChempionship.Link;

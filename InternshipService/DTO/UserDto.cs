@@ -12,6 +12,7 @@ namespace InternshipService.DTO
 		public UserType Type { get; set; }
 		public string Phone { get; set; }
 
+		public UserDto() : base() {}
 		public UserDto(User user) : base(user)
 		{
 			FirstName = user.FirstName;

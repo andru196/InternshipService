@@ -11,6 +11,7 @@ namespace InternshipService.DTO
 		public uint Raiting { get; init; }
 		public ReviewFor ToEntityType { get; set; }
 
+		public ReviewDto() : base() { }
 		public ReviewDto(Review review) : base(review)
 		{
 			Id = review.Guid;

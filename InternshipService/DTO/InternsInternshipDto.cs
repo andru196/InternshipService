@@ -10,6 +10,7 @@ namespace InternshipService.DTO
 		public DateOnly EndDate { get; set; }
 		public RequsetResponseStatus Status { get; set; }
 
+		public InternsInternshipDto() : base() { }
 		public InternsInternshipDto(InternsInternship internship) : base(internship)
 		{
 			PartOfInternRequestId = internship.PartOfInternRequestId;

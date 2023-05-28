@@ -24,6 +24,7 @@ namespace InternshipService.DTO
 		public IEnumerable<UserEventDto> Events { get; set; }
 		public UserDto User { get; set; }
 
+		public InternDto() : base() { }
 		public InternDto(Intern intern, EntityType[] types = null) : base(intern)
 		{
 			types ??= new EntityType[0];

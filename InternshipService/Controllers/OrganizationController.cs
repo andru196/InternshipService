@@ -60,7 +60,7 @@ namespace InternshipService.Controllers
 		{
 			var orgDb = await _dbContext.Organizations
 				.WhereNotNull(Identity.Role == UserType.OrganizationAdmin, x=>x.Guid == new Guid(Identity.OrganizationId))
-				.FirstOrDefaultAsync(x => x.Guid == organizationDto.Id);
+				.FirstOrDefaultAsync(x => x.Guid == organizationDto.Guid);
 			if (orgDb == null)
 				return NotFound();
 			var organization = _mapper.Map<InternResponse>(organizationDto);

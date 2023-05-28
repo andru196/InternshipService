@@ -8,6 +8,7 @@ namespace InternshipService.DTO
 		public Guid BuddyId { get; set; }
 		public BuddyDto Buddy { get; set; }
 		public InternsInternshipDto Intern { get; set; }
+		public BuddyInternLinkDto() : base() { }
 
 		public BuddyInternLinkDto(BuddyInternLink entity, EntityType[] types = null) : base(entity)
 		{

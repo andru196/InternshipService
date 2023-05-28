@@ -61,12 +61,12 @@ namespace InternshipService.Extensions
 
 		public static TSource? FirstOrDefaultFromDto<TSource, TSourceDto>(this IEnumerable<TSource> source, TSourceDto dto) where TSourceDto : EntityDto
 				where TSource : Entity
-		=> source.FirstOrDefault(x => x.Guid == dto.Id);
+		=> source.FirstOrDefault(x => x.Guid == dto.Guid);
 
 
 		public static async Task<TSource?> FirstOrDefaultFromDtoAsync<TSource, TSourceDto>(this IQueryable<TSource> source, TSourceDto dto) where TSourceDto : EntityDto
 				where TSource : Entity
-		=> await source.FirstOrDefaultAsync(x => x.Guid == dto.Id);
+		=> await source.FirstOrDefaultAsync(x => x.Guid == dto.Guid);
 
 	}
 }

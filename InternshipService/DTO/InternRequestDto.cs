@@ -21,6 +21,7 @@ namespace InternshipService.DTO
 		public InternshipDirectionDto? Direction {  get; set; }
 		public OrganizationAdminDto? CreatedBy { get; set; }
 
+		public InternRequestDto() : base() { }
 		public InternRequestDto(InternRequest request, EntityType[] types = null)
 			: base(request)
 		{

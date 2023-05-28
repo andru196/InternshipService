@@ -70,7 +70,7 @@ namespace InternshipService.Controllers
 		{
 			var resDb = await _dbContext.InternResponses
 				.FilterByUser(Identity)
-				.FirstOrDefaultAsync(x => x.Guid == responseDto.Id);
+				.FirstOrDefaultAsync(x => x.Guid == responseDto.Guid);
 			if (resDb == null)
 				return NotFound();
 			var response = _mapper.Map<InternResponse>(responseDto);

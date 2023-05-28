@@ -10,6 +10,7 @@ namespace InternshipService.DTO
 
 		public InternDto? Intern { get; set; }
 		public TestDto? Test { get; set; }
+		public InternTestDto() : base() { }
 		public InternTestDto(InternTest test, EntityType[] types = null) : base(test)
 		{
 			types ??= new EntityType[0];

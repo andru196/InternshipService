@@ -19,6 +19,7 @@ namespace InternshipService.DTO
 		public FileRecordDto? CV { get; set; }
 		public InternDto Intern { get; set; }
 
+		public InternResponseDto() : base() { }
 		public InternResponseDto(InternResponse response, EntityType[] types = null)
 			: base(response)
 		{

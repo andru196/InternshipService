@@ -9,6 +9,7 @@ namespace InternshipService.DTO
 		public OrganizationDto Organization { get; set; }
 		public UserDto User { get; set; }
 
+		public OrganizationAdminDto() : base() { }
 		public OrganizationAdminDto(OrganizationAdmin admin, EntityType[] types = null): base(admin)
 		{
 			types ??= new EntityType[0];

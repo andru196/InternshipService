@@ -65,7 +65,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult<TagDto>> Put(TagDto tagDbo)
 		{
-			var tagDb = await _dbContext.Tags.FirstOrDefaultAsync(x => x.Guid == tagDbo.Id);
+			var tagDb = await _dbContext.Tags.FirstOrDefaultAsync(x => x.Guid == tagDbo.Guid);
 			if (tagDb == null)
 				return NotFound();
 			var tag = _mapper.Map<Tag>(tagDbo);

@@ -11,6 +11,7 @@ namespace InternshipService.DTO
 		public IEnumerable<OrganizationAdminDto> Admins { get; set; }
 		public FileRecordDto? Avatar { get; set; }
 
+		public OrganizationDto() : base() { }
 		public OrganizationDto(Organization organization, EntityType[] types = null)
 			: base(organization)
 		{

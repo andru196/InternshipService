@@ -6,6 +6,7 @@ namespace InternshipService.DTO
 	{
 		public string FullPath { get; set; }
 
+		public FileRecordDto() : base() { }
 		public FileRecordDto(FileRecord file) : base(file)
 		{
 			//FullPath = file.FullPath;

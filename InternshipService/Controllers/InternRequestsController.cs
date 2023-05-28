@@ -74,7 +74,7 @@ namespace InternshipService.Controllers
 			var reqDb = _dbContext.InternRequests
 				.AsNoTracking()
 				.FilterByUser(Identity)
-				.FirstOrDefault(x => x.Guid == request.Id);
+				.FirstOrDefault(x => x.Guid == request.Guid);
 			if (reqDb == null)
 				return NotFound();
 			var req = _mapper.Map<InternRequest>(request);

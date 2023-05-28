@@ -12,6 +12,7 @@ namespace InternshipService.DTO
 		public bool IsViewed { get; set; }
 		public uint Raiting { get; set; }
 
+		public InternCaseChempionshipResultDto() : base() { }
 		public InternCaseChempionshipResultDto(InternCaseChempionshipResult result, EntityType[] types = null)
 			: base(result)
 		{

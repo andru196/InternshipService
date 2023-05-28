@@ -10,6 +10,7 @@ namespace InternshipService.DTO
 		public EventDto? Event { get; set; }
 		public UserEventAttendStatus AttendStatus { get; set; }
 
+		public UserEventDto() : base() { }
 		public UserEventDto(UserEvent userEvent, EntityType[] types = null)
 			: base(userEvent)
 		{

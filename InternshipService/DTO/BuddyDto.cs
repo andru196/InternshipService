@@ -8,7 +8,7 @@ namespace InternshipService.DTO
 		public double Raiting { get; set; } = 0;
 		public OrganizationDto Organization { get; set; }
 		public UserDto? User { get; set; }
-
+		public BuddyDto() : base() { }
 		public BuddyDto(Buddy buddy, EntityType[] types = null) : base(buddy)
 		{
 			types = types ?? new EntityType[0];

@@ -11,6 +11,7 @@ namespace InternshipService.DTO
 		public UserDto User { get; set; }
 		public FileRecordDto Certificate { get; set; }
 
+		public UserTrainingDto() : base() { }
 		public UserTrainingDto(UserTraining training, EntityType[] types = null)
 			: base(training)
 		{

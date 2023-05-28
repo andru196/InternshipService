@@ -12,6 +12,7 @@ namespace InternshipService.DTO
 		public DateTime Begin { get; set; }
 		public DateTime? End { get; set; }
 		
+		public EventDto() : base() { }
 		public EventDto(Event eventDb, EntityType[] types = null) : base(eventDb)
 		{
 			types ??= new EntityType[0];

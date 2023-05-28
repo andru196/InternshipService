@@ -9,6 +9,7 @@ namespace InternshipService.DTO
 		public InternshipDirectionDto Direction { get; set; }
 		public Guid DirectionId { get; set; }
 
+		public MentorDto() : base() { }
 		public MentorDto(Mentor mentor, EntityType[] types = null) : base(mentor)
 		{
 			types ??= new EntityType[0];

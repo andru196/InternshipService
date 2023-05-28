@@ -9,6 +9,7 @@ namespace InternshipService.DTO
 		public Guid? AvatarId { get; set; }
 		public FileRecordDto? Avatar { get; set; }
 
+		public UniversityDto() : base() { }
 		public UniversityDto(University university, EntityType[] types = null)
 			: base(university)
 		{

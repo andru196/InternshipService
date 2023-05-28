@@ -49,7 +49,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult> Put(UserTrainingDto trainingDto)
 		{
-			var trainingDb = await _dbContext.UserTrainings.FirstOrDefaultAsync(x => x.Guid == trainingDto.Id);
+			var trainingDb = await _dbContext.UserTrainings.FirstOrDefaultAsync(x => x.Guid == trainingDto.Guid);
 			if (trainingDb?.UserId != Identity.Id && Identity.Role != UserType.Admin)
 				return Forbid();
 			var training = _mapper.Map<UserTraining>(trainingDto);

@@ -8,6 +8,7 @@ namespace InternshipService.DTO
 		public string? Body { get; set; }
 		public Guid OrganizationId { get; set; }
 
+		public TestDto() : base() { }
 		public TestDto(Test test) : base(test)
 		{
 			IsLink = test.IsLink;

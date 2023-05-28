@@ -55,7 +55,7 @@ namespace InternshipService.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<ActionResult<UniversityDto>> Put(UniversityDto universityDto)
 		{
-			var uniDb = await _dbContext.Universities.FirstOrDefaultAsync(x => x.Guid == universityDto.Id);
+			var uniDb = await _dbContext.Universities.FirstOrDefaultAsync(x => x.Guid == universityDto.Guid);
 			if (uniDb == null)
 				return NotFound();
 			var university = _mapper.Map<InternResponse>(universityDto);

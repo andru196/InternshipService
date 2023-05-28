@@ -8,6 +8,7 @@ namespace InternshipService.DTO
 		public string Name { get; set; }
 
 
+		public InternshipDirectionDto() : base() { }
 		public InternshipDirectionDto(InternshipDirection direction) : base(direction)
 		{
 		}
